@@ -1,7 +1,7 @@
 /*
-  Código mejorado por NOXIVO
+  Código creado y mejorado por NOXIVO para nodeMCU ESP8266.
 
-  Este código ha sido optimizado y mejorado significativamente por NOXIVO para ofrecer una detección de monedas
+  Este código ha sido creado, optimizado y mejorado significativamente por NOXIVO para ofrecer una detección de monedas
   más precisa y confiable. Se han implementado diversas técnicas y estrategias para minimizar los falsos positivos
   y mejorar la robustez del sistema. Entre las mejoras implementadas se incluyen:
 
