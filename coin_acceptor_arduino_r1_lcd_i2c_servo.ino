@@ -157,3 +157,14 @@ void procesarMoneda() {
 
 // Parpadeo del mensaje "Inserte Monedas"
 void parpadeoMensaje() {
+  if (millis() - ultimoTiempoParpadeo >= 500) {
+    ultimoTiempoParpadeo = millis();
+    parpadeo = !parpadeo;
+    lcd.setCursor((LCD_COLS - strlen("Inserte Monedas")) / 2, 1);
+    if (parpadeo) {
+      lcd.print("Inserte Monedas");
+    } else {
+      lcd.print("               ");  // Espacio en blanco para el parpadeo
+    }
+  }
+}
