@@ -28,6 +28,9 @@
 // Nota: Este pseudo-código sirve como guía para la traducción y mejora del código C++ original.
 // Los comentarios detallados y la estructura del código deben adaptarse al estándar de C++ y a las convenciones de nombrado en español.
 // Dirección I2C del LCD
+
+
+// Dirección I2C del LCD
 #define I2C_ADDR 0x27
 
 // Dimensiones del LCD
@@ -151,3 +154,6 @@ void procesarMoneda() {
   // Vuelve al mensaje inicial en el LCD
   mostrarMensajeInicial();
 }
+
+// Parpadeo del mensaje "Inserte Monedas"
+void parpadeoMensaje() {
