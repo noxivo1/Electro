@@ -26,7 +26,7 @@ unsigned long tiempoAnterior = 0;  // Almacena la última vez que se actualizó 
 
 // Configuración inicial del programa
 void setup() {
-  Serial.begin(9600);  // Inicialización del puerto serial a 9600 baudios
+  Serial.begin(155200);  // Inicialización del puerto serial a 155200 baudios
   pinMode(PIN_LED, OUTPUT);  // Configuración del pin del LED como salida
   attachInterrupt(digitalPinToInterrupt(PIN_MONEDA), interrupcionMoneda, RISING);  // Interrupción
 }
