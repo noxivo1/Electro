@@ -27,9 +27,6 @@
 
 // Nota: Este pseudo-código sirve como guía para la traducción y mejora del código C++ original.
 // Los comentarios detallados y la estructura del código deben adaptarse al estándar de C++ y a las convenciones de nombrado en español.
-
-
-
 // Dirección I2C del LCD
 #define I2C_ADDR 0x27
 
@@ -38,7 +35,7 @@
 #define LCD_ROWS 2
 
 // Inicialización del LCD
-LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLS, LCD_ROWS); 
+LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLS, LCD_ROWS);
 
 // Inicialización del Servo
 Servo servoMotor;
@@ -55,10 +52,11 @@ volatile bool monedaInsertada = false;  // Bandera de inserción de moneda
 // Variables para el parpadeo del mensaje
 bool parpadeo = false;
 unsigned long ultimoTiempoParpadeo = 0;
+unsigned long tiempoAnterior = 0; // Para controlar eventos temporizados
 
 // Configuración inicial del programa
 void setup() {
-  // Inicialización del puerto serial a 9600 baudios
+  // Inicialización del puerto serial a 115200 baudios
   Serial.begin(115200);
 
   // Inicialización del LCD
@@ -70,10 +68,7 @@ void setup() {
   servoMotor.write(0);  // Posiciona el servo en 0 grados
 
   // Mostrar mensajes centrados
-  lcd.setCursor((LCD_COLS - 13) / 2, 0);  // Centrar "BIENVENIDO"
-  lcd.print("BIENVENIDO");
-  lcd.setCursor((LCD_COLS - 15) / 2, 1);  // Centrar "Inserte Monedas"
-  lcd.print("Inserte Monedas");
+  mostrarMensajeInicial();
 
   // Configuración del pin del LED como salida
   pinMode(PIN_LED, OUTPUT);
@@ -89,66 +84,19 @@ void setup() {
 void loop() {
   // Verifica si se ha insertado una moneda
   if (monedaInsertada) {
-    // Reinicia la bandera de inserción de moneda
-    monedaInsertada = false;
-
-    // Enciende el LED
-    digitalWrite(PIN_LED, HIGH);
-
-    // Actualiza el LCD
-    lcd.clear();
-    lcd.setCursor((LCD_COLS - 11) / 2, 0);  // Centrar "$500 Pesos"
-    lcd.print("$500 Pesos");
-
-    // Apaga el LED indicador
-    digitalWrite(PIN_LED, LOW);
-
-    delay(1000);  // Espera 1 segundos
-
-    // Muestra "Dispensando" centrado en el LCD
-    lcd.clear();
-    lcd.setCursor((LCD_COLS - 12) / 2, 0);  // Centrar "Dispensando..."
-    lcd.print("Dispensando...");
-
-    // Mueve el servo a 130 grados mientras se muestra "Dispensando..."
-    servoMotor.write(130);
-    delay(1000);  // Espera 1 segundo
-
-    // Detiene y apaga el servo
-    servoMotor.detach();
-    pinMode(PIN_SERVO, INPUT);
-
-    // Regresa el servo a 0 grados
-    servoMotor.attach(PIN_SERVO);
-    servoMotor.write(0);
-    delay(1000);  // Espera 1 segundo
-
-    // Vuelve al mensaje inicial en el LCD
-    mostrarMensajeInicial();
-    
-    // Reinicia el contador de pulsos
-    conteoPulsos = 0;
+    procesarMoneda();
   }
 
   // Parpadeo del mensaje "Inserte Monedas"
-  if (millis() - ultimoTiempoParpadeo >= 500) {
-    ultimoTiempoParpadeo = millis();
-    parpadeo = !parpadeo;
-    lcd.setCursor((LCD_COLS - 15) / 2, 1);
-    if (parpadeo) {
-      lcd.print("Inserte Monedas");
-    } else {
-      lcd.print("               ");  // Espacio en blanco para el parpadeo
-    }
-  }
+  parpadeoMensaje();
 }
 
 // Función para mostrar el mensaje inicial en el LCD
 void mostrarMensajeInicial() {
   lcd.clear();
-  lcd.setCursor((LCD_COLS - 13) / 2, 0);  // Centrar "BIENVENIDO"
+  lcd.setCursor((LCD_COLS - strlen("BIENVENIDO")) / 2, 0);
   lcd.print("BIENVENIDO");
-  lcd.setCursor((LCD_COLS - 15) / 2, 1);  // Centrar "Inserte Monedas"
+  lcd.setCursor((LCD_COLS - strlen("Inserte Monedas")) / 2, 1);
   lcd.print("Inserte Monedas");
 }
 
@@ -160,3 +108,49 @@ void interrupcionMoneda() {
   // Establece la bandera de inserción de moneda
   monedaInsertada = true;
 }
+
+// Procesa la inserción de la moneda
+void procesarMoneda() {
+  // Reinicia la bandera de inserción de moneda
+  monedaInsertada = false;
+
+  // Enciende el LED
+  digitalWrite(PIN_LED, HIGH);
+
+  // Actualiza el LCD
+  lcd.clear();
+  lcd.setCursor((LCD_COLS - strlen("$500 Pesos")) / 2, 0);
+  lcd.print("$500 Pesos");
+
+  // Espera sin bloquear
+  tiempoAnterior = millis();
+  while (millis() - tiempoAnterior < 1000) {
+    // Mantiene el programa responsivo
+  }
+
+  // Apaga el LED indicador
+  digitalWrite(PIN_LED, LOW);
+
+  // Muestra "Dispensando" centrado en el LCD
+  lcd.clear();
+  lcd.setCursor((LCD_COLS - strlen("Dispensando...")) / 2, 0);
+  lcd.print("Dispensando...");
+
+  // Mueve el servo a 130 grados mientras se muestra "Dispensando..."
+  servoMotor.write(130);
+
+  // Espera sin bloquear
+  tiempoAnterior = millis();
+  while (millis() - tiempoAnterior < 1000) {
+    // Mantiene el programa responsivo
+  }
+
+  // Regresa el servo a 0 grados
+  servoMotor.write(0);
+
+  // Vuelve al mensaje inicial en el LCD
+  mostrarMensajeInicial();
+}
+
+
+
