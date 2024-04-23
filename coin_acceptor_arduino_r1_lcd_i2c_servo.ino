@@ -31,7 +31,7 @@ unsigned long ultimoTiempoParpadeo = 0;
 // Configuración inicial del programa
 void setup() {
   // Inicialización del puerto serial a 9600 baudios
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   // Inicialización del LCD
   lcd.init();
@@ -71,7 +71,11 @@ void loop() {
     lcd.clear();
     lcd.setCursor((LCD_COLS - 11) / 2, 0);  // Centrar "$500 Pesos"
     lcd.print("$500 Pesos");
-    delay(4000);  // Espera 4 segundos
+
+    // Apaga el LED indicador
+    digitalWrite(PIN_LED, LOW);
+
+    delay(1000);  // Espera 1 segundos
 
     // Muestra "Dispensando" centrado en el LCD
     lcd.clear();
@@ -93,10 +97,7 @@ void loop() {
 
     // Vuelve al mensaje inicial en el LCD
     mostrarMensajeInicial();
-
-    // Apaga el LED indicador
-    digitalWrite(PIN_LED, LOW);
-
+    
     // Reinicia el contador de pulsos
     conteoPulsos = 0;
   }
