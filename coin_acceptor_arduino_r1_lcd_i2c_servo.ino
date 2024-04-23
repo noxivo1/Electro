@@ -151,6 +151,3 @@ void procesarMoneda() {
   // Vuelve al mensaje inicial en el LCD
   mostrarMensajeInicial();
 }
-
-
-
