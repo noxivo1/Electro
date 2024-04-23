@@ -1,6 +1,34 @@
-#include <Wire.h> 
-#include <LiquidCrystal_I2C.h>  // Incluye la biblioteca LCD I2C
-#include <Servo.h>              // Incluye la biblioteca para controlar el servo
+// Créditos
+// Autor: Noxivo
+// Descripción: Este código controla un dispensador de monedas utilizando un LCD I2C y un servo motor.
+
+// Bibliotecas necesarias
+#include <Wire.h> // Biblioteca para la comunicación I2C
+#include <LiquidCrystal_I2C.h> // Biblioteca para el control del LCD I2C
+#include <Servo.h> // Biblioteca para el control del servo motor
+
+// Definición de constantes y variables globales
+// Dirección I2C del LCD, dimensiones del LCD, inicialización del LCD y del servo motor
+// Pines para la entrada de señal de moneda, LED y servo
+// Variables para el manejo de interrupciones y parpadeo del mensaje
+
+// Configuración inicial (setup)
+// Inicializar comunicación serial, LCD, servo motor, y configurar pines
+// Mostrar mensaje de bienvenida y configurar interrupción para la detección de monedas
+
+// Bucle principal (loop)
+// Verificar si se ha insertado una moneda y procesar la inserción
+// Encender LED, actualizar LCD, mover servo, y mostrar mensajes correspondientes
+// Parpadeo del mensaje "Inserte Monedas" en el LCD
+
+// Funciones adicionales
+// mostrarMensajeInicial: para mostrar el mensaje de bienvenida en el LCD
+// interrupcionMoneda: para manejar la interrupción generada por la inserción de monedas
+
+// Nota: Este pseudo-código sirve como guía para la traducción y mejora del código C++ original.
+// Los comentarios detallados y la estructura del código deben adaptarse al estándar de C++ y a las convenciones de nombrado en español.
+
+
 
 // Dirección I2C del LCD
 #define I2C_ADDR 0x27
