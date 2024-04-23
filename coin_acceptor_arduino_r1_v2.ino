@@ -1,3 +1,20 @@
+/*
+  Programa Avanzado de Verificación de Inserción de Monedas para Arduino Uno. Versión 2 mejorada.
+  
+  Descripción:
+  Este programa supervisa la inserción de monedas utilizando una interrupción en un pin digital.
+  Al detectar una moneda, se activa un LED y se envía un mensaje al puerto serial.
+  
+  Mejoras y Optimizaciones:
+  Este código ha sido meticulosamente mejorado y optimizado por Noxivo, un entusiasta del Arduino y virtuoso de la programación.
+  Noxivo es reconocido por su ardiente pasión por la electrónica y sus significativas contribuciones a la comunidad.
+  
+  Créditos:
+  Mejorado y Optimizado por: Noxivo
+  Contribuciones: Dedicación ferviente a la electrónica, la programación y el enriquecimiento de la comunidad.
+*/
+
+
 // Definición de constantes para pines y configuraciones
 const int PIN_MONEDA = 2;  // Pin digital para la entrada de señal de moneda
 const int PIN_LED = 13;    // Pin digital para el LED indicador
